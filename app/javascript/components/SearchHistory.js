@@ -25,12 +25,23 @@ export default class SearchHistory extends Component {
       <Container>
         <Row>
           <Col xs={12}>
-            <h1 style={{ textAlign: "center", color: "lightslategray" }}>
+            <h1
+              style={{
+                textAlign: "center",
+                color: "lightslategray",
+                fontSize: "3vmax",
+              }}
+            >
               Search History
             </h1>
           </Col>
           <Col xs={12}>
-            <table className="table-style">
+            <table
+              className="table-style"
+              style={{
+                fontSize: "1.5vmax",
+              }}
+            >
               <tbody>
                 <tr>
                   <th style={{ textAlign: "center" }}>Search Key</th>

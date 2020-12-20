@@ -66,7 +66,13 @@ class CinDecoder extends Component {
         {!showHistory && (
           <Row style={{ marginTop: "10%" }}>
             <Col xs={12}>
-              <h1 style={{ textAlign: "center", color: "lightslategray" }}>
+              <h1
+                style={{
+                  textAlign: "center",
+                  color: "lightslategray",
+                  fontSize: "3vmax",
+                }}
+              >
                 CIN Number Decoder
               </h1>
             </Col>
@@ -137,7 +143,7 @@ class CinDecoder extends Component {
                   color: "blue",
                   cursor: "pointer",
                   textDecoration: "underline",
-                  fontSize: "20px",
+                  fontSize: "3vmax",
                 }}
                 onClick={() => this.setState({ showHistory: true })}
               >
@@ -159,7 +165,7 @@ class CinDecoder extends Component {
                   color: "blue",
                   cursor: "pointer",
                   textDecoration: "underline",
-                  fontSize: "20px",
+                  fontSize: "3vmax",
                 }}
                 onClick={() => this.setState({ showHistory: false })}
               >

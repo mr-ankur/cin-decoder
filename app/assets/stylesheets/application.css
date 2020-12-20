@@ -14,10 +14,22 @@
  *= require_self
  */
 
+ body {
+  margin: 0;
+  padding: 0;
+  padding-top: 56px;
+  overflow-x: hidden !important;
+  overflow-y: scroll;
+  font-family: "Nunito", sans-serif;
+}
+
+
  ul {
   display: inline-flex;
   list-style-type: none;
-  padding: 1rem;
+  padding-left: 2vmax;
+  padding-right: 2vmax;
+  font-size: 2vmax;
 }
 
 a {
@@ -27,7 +39,7 @@ a {
 .search-field {
   float: right;
   padding: 10px;
-  font-size: 17px;
+  font-size: 3vmax;
   border: 1px solid grey;
   float: left;
   width: 100%;
@@ -40,7 +52,7 @@ a {
   padding: 10px;
   background: #2196F3;
   color: white;
-  font-size: 17px;
+  font-size: 3vmax;
   border: 1px solid grey;
   border-left: none;
   cursor: pointer;
