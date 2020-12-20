@@ -65,7 +65,11 @@ class V1::CinController < ApplicationController
                             ownership = OWNERSHIP_STATUS[params[:number][12..14]]
                             if ownership
                                 reg_no = params[:number][15..20]
-                                valid = true if is_numeric?(reg_no)
+                                if is_numeric?(reg_no)
+                                    valid = true
+                                    SearchHistory.create(search_key: params[:number])
+                                    SearchHistory.first.destroy if SearchHistory.count > 200 # Deleting old search history
+                                end
                             end
                         end
                     end
@@ -73,6 +77,11 @@ class V1::CinController < ApplicationController
             end
         end
         render json: { cin: { valid: valid, listing: listing, industry_code: industry_code, state: state, year: year, ownership: ownership, reg_no: reg_no } }.to_json
+    end
+
+    def search_history
+        search_history = SearchHistory.all
+        render json: { search_history: search_history.reverse }.to_json
     end
 
     def is_numeric?(value)
