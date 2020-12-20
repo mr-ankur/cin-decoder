@@ -52,7 +52,7 @@ export default class SearchHistory extends Component {
                     <tr key={x.id}>
                       <td style={{ textAlign: "center" }}>{x.search_key}</td>
                       <td style={{ textAlign: "center" }}>
-                        {moment(x.created_at).format("LLLL")}
+                        {moment(x.created_at).format("h:mm:ss A, D MMM YYYY")}
                       </td>
                     </tr>
                   ))}

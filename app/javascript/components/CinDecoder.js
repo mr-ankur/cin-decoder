@@ -97,8 +97,8 @@ class CinDecoder extends Component {
               </form>
             </Col>
             {!valid && this.props.cin && (
-              <Col xs={12} style={{ color: "red" }}>
-                CIN is not valid
+              <Col xs={12} style={{ color: "red", fontSize: "2.5vmax" }}>
+                CIN Number is not valid
               </Col>
             )}
             {valid && (
