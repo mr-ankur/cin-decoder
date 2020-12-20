@@ -4,6 +4,9 @@ import { createStructuredSelector } from 'reselect'
 import axios from 'axios'
 import { Field, reduxForm } from "redux-form";
 import SearchHistory from './SearchHistory'
+import { Container, Row, Col } from "react-grid-system"
+// import ReactTable from "react-table";
+// import "react-table/react-table.css";  
 
 const GET_CIN_SEARCH_SUCCESS = 'GET_CIN_SEARCH_SUCCESS';
 const GET_SEARCH_HISTORY_SUCCESS = "GET_SEARCH_HISTORY_SUCCESS";
@@ -59,59 +62,113 @@ class CinDecoder extends Component {
     const { showHistory } = this.state
     const valid = this.props.cin && this.props.cin.valid
     return (
-      <div>
+      <Container>
         {!showHistory && (
-          <div>
-            <form onSubmit={handleSubmit(this.submit)}>
-              <div>
-                <label>CIN Number</label>
-                <div>
-                  <Field
-                    name="cin.number"
-                    component="input"
-                    type="text"
-                    placeholder="Last Name"
-                  />
-                </div>
-              </div>
-              <button type="submit">Search CIN Number</button>
-            </form>
-            {!valid && this.props.cin && <div>CIN is not valid</div>}
-            {valid && (
-              <div>
-                <br />
-                <br />
-                <span>Listing status: {this.props.cin.listing} compony</span>
-                <br />
-                <span>Industry Code: {this.props.cin.industry_code}</span>
-                <br />
-                <span>State: {this.props.cin.state}</span>
-                <br />
-                <span>Company incorporate year: {this.props.cin.year}</span>
-                <br />
-                <span>Company Type: {this.props.cin.ownership}</span>
-                <br />
-                <span>Registration Number: {this.props.cin.reg_no}</span>
-              </div>
+          <Row style={{ marginTop: "10%" }}>
+            <Col xs={12}>
+              <h1 style={{ textAlign: "center", color: "lightslategray" }}>
+                CIN Number Decoder
+              </h1>
+            </Col>
+            <Col xs={12}>
+              <form onSubmit={handleSubmit(this.submit)}>
+                <Row>
+                  <Col xs={8}>
+                    <Field
+                      className="search-field"
+                      name="cin.number"
+                      component="input"
+                      type="text"
+                      placeholder="Enter CIN Number..."
+                    />
+                  </Col>
+                  <Col xs={4}>
+                    <button className="search-button" type="submit">
+                      Search
+                    </button>
+                  </Col>
+                </Row>
+              </form>
+            </Col>
+            {!valid && this.props.cin && (
+              <Col xs={12} style={{ color: "red" }}>
+                CIN is not valid
+              </Col>
             )}
-            <br />
-            <br />
-            <button onClick={() => this.setState({ showHistory: true })}>
-              Search History
-            </button>
-          </div>
+            {valid && (
+              <Col xs={12}>
+                <br />
+                <br />
+                <table className="table-style">
+                  <tbody>
+                    <tr>
+                      <td>Listing status</td>
+                      <td>{this.props.cin.listing}</td>
+                    </tr>
+                    <tr>
+                      <td>Industry Code</td>
+                      <td>{this.props.cin.industry_code}</td>
+                    </tr>
+                    <tr>
+                      <td>State</td>
+                      <td>{this.props.cin.state}</td>
+                    </tr>
+                    <tr>
+                      <td>Company Incorporate Year</td>
+                      <td>{this.props.cin.year}</td>
+                    </tr>
+                    <tr>
+                      <td>Company Type</td>
+                      <td>{this.props.cin.ownership}</td>
+                    </tr>
+                    <tr>
+                      <td>Registration Number</td>
+                      <td>{this.props.cin.reg_no}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Col>
+            )}
+            <Col xs={12}>
+              <br />
+              <br />
+              <span
+                style={{
+                  color: "blue",
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                  fontSize: "20px",
+                }}
+                onClick={() => this.setState({ showHistory: true })}
+              >
+                Search History
+              </span>
+            </Col>
+          </Row>
         )}
         {showHistory && (
-          <div>
-            <SearchHistory {...this.props} />
+          <Row style={{ marginTop: "5%" }}>
+            <Col xs={12}>
+              <SearchHistory {...this.props} />
+            </Col>
             <br />
             <br />
-            <button onClick={() => this.setState({ showHistory: false })}>
-              Back
-            </button>
-          </div>
+            <Col xs={12}>
+              <span
+                style={{
+                  color: "blue",
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                  fontSize: "20px",
+                }}
+                onClick={() => this.setState({ showHistory: false })}
+              >
+                Back
+              </span>
+            </Col>
+          </Row>
         )}
-      </div>
+      </Container>
     );
   }
 }
