@@ -13,6 +13,9 @@ export default class App extends Component {
           <Switch>
             <Route exact path='/' render={() => <CinDecoder/>}  />
           </Switch>
+          {/* <Switch>
+            <Route exact path='/users/sign_in' render={() => <CinDecoder/>}  />
+          </Switch> */}
         </BrowserRouter>
       </Provider>
     )

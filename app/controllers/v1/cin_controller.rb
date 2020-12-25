@@ -52,6 +52,12 @@ class V1::CinController < ApplicationController
   }
 
     def index
+        p "=================="
+        p "=================="
+        p "=================="
+        p current_user
+        p "=================="
+        p "=================="
         valid = false
         if params[:number].length == 21
             listing = LISTING_STATUS[params[:number][0]]
@@ -67,8 +73,8 @@ class V1::CinController < ApplicationController
                                 reg_no = params[:number][15..20]
                                 if is_numeric?(reg_no)
                                     valid = true
-                                    SearchHistory.create(search_key: params[:number])
-                                    SearchHistory.first.destroy if SearchHistory.count > 200 # Deleting old search history
+                                    current_user.search_history.create(search_key: params[:number])
+                                    current_user.search_history.first.destroy if current_user.search_history.count > 100 # Deleting old search history
                                 end
                             end
                         end
@@ -80,8 +86,7 @@ class V1::CinController < ApplicationController
     end
 
     def search_history
-        search_history = SearchHistory.all
-        render json: { search_history: search_history.reverse }.to_json
+        render json: { search_history: current_user.search_history.reverse }.to_json
     end
 
     def is_numeric?(value)
