@@ -52,12 +52,6 @@ class V1::CinController < ApplicationController
   }
 
     def index
-        p "=================="
-        p "=================="
-        p "=================="
-        p current_user
-        p "=================="
-        p "=================="
         valid = false
         if params[:number].length == 21
             listing = LISTING_STATUS[params[:number][0]]

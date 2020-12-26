@@ -5,12 +5,41 @@ import axios from 'axios'
 import { Field, reduxForm } from "redux-form";
 import SearchHistory from './SearchHistory'
 import { Container, Row, Col } from "react-grid-system"
-// import ReactTable from "react-table";
-// import "react-table/react-table.css";  
 
 const GET_CIN_SEARCH_SUCCESS = 'GET_CIN_SEARCH_SUCCESS';
 const GET_SEARCH_HISTORY_SUCCESS = "GET_SEARCH_HISTORY_SUCCESS";
 
+const renderTextField = ({
+  input,
+  label,
+  meta: { touched, error, warning },
+}) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <input
+        className="search-field"
+        {...input}
+        placeholder={label}
+        type="text"
+      />
+      {touched &&
+        ((error && <span style={{color: 'red'}}>{error}</span>) ||
+          (warning && <span>{warning}</span>))}
+    </div>
+  </div>
+);
+
+const validate = (values) => {
+  const errors = { cin: {}};
+  let {cin = {}} = values
+  if (cin && !cin.number) {
+    errors.cin.number = "CIN Number is required";
+  } else if(cin && cin.number && cin.number.length != 21 ){
+    errors.cin.number = "CIN Number is Invalid";
+  }
+  return errors;
+};
 
 function searchCIN(number){
   return dispatch => {
@@ -50,9 +79,6 @@ class CinDecoder extends Component {
   state={
     showHistory: false
   }
-  // UNSAFE_componentWillReceiveProps(np) {
-  //   console.log(111, np);
-  // }
   submit = (values) => {
     let number = values.cin && values.cin.number;
     if(number) this.props.searchCIN(number);
@@ -61,6 +87,7 @@ class CinDecoder extends Component {
     const { handleSubmit } = this.props;
     const { showHistory } = this.state
     const valid = this.props.cin && this.props.cin.valid
+    console.log(8888, this.props)
     return (
       <Container>
         {!showHistory && (
@@ -81,11 +108,9 @@ class CinDecoder extends Component {
                 <Row>
                   <Col xs={8}>
                     <Field
-                      className="search-field"
                       name="cin.number"
-                      component="input"
-                      type="text"
-                      placeholder="Enter CIN Number..."
+                      component={renderTextField}
+                      label="CIN Number"
                     />
                   </Col>
                   <Col xs={4}>
@@ -98,7 +123,7 @@ class CinDecoder extends Component {
             </Col>
             {!valid && this.props.cin && (
               <Col xs={12} style={{ color: "red", fontSize: "2.5vmax" }}>
-                CIN Number is not valid
+                CIN Number is incorrect, please check it again and try again.
               </Col>
             )}
             {valid && (
@@ -195,6 +220,7 @@ const mapDispatchToProps = (dispatch) => {
 const CinForm = reduxForm({
   // a unique name for the form
   form: "cin",
+  validate,
 })(CinDecoder);
 
 export default connect(structuredSelector, mapDispatchToProps)(CinForm);

@@ -11,14 +11,11 @@ export default class App extends Component {
       <Provider store={store}>
         <BrowserRouter>
           <Switch>
-            <Route exact path='/' render={() => <CinDecoder/>}  />
+            <Route exact path="/" render={() => <CinDecoder {...this.props} />} />
           </Switch>
-          {/* <Switch>
-            <Route exact path='/users/sign_in' render={() => <CinDecoder/>}  />
-          </Switch> */}
         </BrowserRouter>
       </Provider>
-    )
+    );
   }
 }
 

@@ -5,12 +5,6 @@ class RegistrationsController < Devise::RegistrationsController
     end
 
     def create
-        p "======================"
-        p "======================"
-        p "======================"
-        p "======================"
-        p "======================"
-        p "======================"
         super
     end
 
