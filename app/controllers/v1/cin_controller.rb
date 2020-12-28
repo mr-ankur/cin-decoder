@@ -52,6 +52,9 @@ class V1::CinController < ApplicationController
   }
 
     def index
+    end
+
+    def search
         valid = false
         if params[:number].length == 21
             listing = LISTING_STATUS[params[:number][0]]

@@ -1,34 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import axios from 'axios'
 import { Field, reduxForm } from "redux-form";
 import SearchHistory from './SearchHistory'
 import { Container, Row, Col } from "react-grid-system"
-
-const GET_CIN_SEARCH_SUCCESS = 'GET_CIN_SEARCH_SUCCESS';
-const GET_SEARCH_HISTORY_SUCCESS = "GET_SEARCH_HISTORY_SUCCESS";
-
-const renderTextField = ({
-  input,
-  label,
-  meta: { touched, error, warning },
-}) => (
-  <div>
-    <label>{label}</label>
-    <div>
-      <input
-        className="search-field"
-        {...input}
-        placeholder={label}
-        type="text"
-      />
-      {touched &&
-        ((error && <span style={{color: 'red'}}>{error}</span>) ||
-          (warning && <span>{warning}</span>))}
-    </div>
-  </div>
-);
+import { searchCIN, getSearchHistory } from "../actions/cinActions";
+import { signOut } from "../actions/loginActions";
+import { textField } from './formComponents'
+import { Link } from "react-router-dom";
 
 const validate = (values) => {
   const errors = { cin: {}};
@@ -40,40 +19,6 @@ const validate = (values) => {
   }
   return errors;
 };
-
-function searchCIN(number){
-  return dispatch => {
-    return axios
-      .get("v1/cin?number="+number )
-      .then((response) => response.data)
-      .then((data) => dispatch(searchCINSuccess(data)))
-      .catch((error) => console.log(error));
-  }
-}
-
-function searchCINSuccess(data) {
-  return {
-    type: GET_CIN_SEARCH_SUCCESS,
-    data,
-  };
-}
-
-function getSearchHistory(){
-  return (dispatch) => {
-    return axios
-      .get("v1/cin/search_history")
-      .then((response) => response.data)
-      .then((data) => dispatch(getSearchHistorySuccess(data)))
-      .catch((error) => console.log(error));
-  };
-}
-
-function getSearchHistorySuccess(data){
-  return {
-    type: GET_SEARCH_HISTORY_SUCCESS,
-    data,
-  };
-}
 
 class CinDecoder extends Component {
   state={
@@ -87,7 +32,6 @@ class CinDecoder extends Component {
     const { handleSubmit } = this.props;
     const { showHistory } = this.state
     const valid = this.props.cin && this.props.cin.valid
-    console.log(8888, this.props)
     return (
       <Container>
         {!showHistory && (
@@ -109,7 +53,7 @@ class CinDecoder extends Component {
                   <Col xs={8}>
                     <Field
                       name="cin.number"
-                      component={renderTextField}
+                      component={textField}
                       label="CIN Number"
                     />
                   </Col>
@@ -160,21 +104,29 @@ class CinDecoder extends Component {
                 </table>
               </Col>
             )}
-            <Col xs={12}>
-              <br />
-              <br />
-              <span
-                style={{
-                  color: "blue",
-                  cursor: "pointer",
-                  textDecoration: "underline",
-                  fontSize: "3vmax",
-                }}
-                onClick={() => this.setState({ showHistory: true })}
-              >
-                Search History
-              </span>
-            </Col>
+            <Row>
+              <Col xs={9}>
+                <br />
+                <br />
+                <span
+                  style={{
+                    color: "blue",
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    fontSize: "3vmax",
+                  }}
+                  onClick={() => this.setState({ showHistory: true })}
+                >
+                  Search History
+                </span>
+              </Col>
+              <Col xs={3}>
+                <br />
+                <br />
+                {/* <Link to="/login">Log Out</Link> */}
+                <button onClick={() => this.props.signOut()}>Sign Out</button>
+              </Col>
+            </Row>
           </Row>
         )}
         {showHistory && (
@@ -213,6 +165,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     // dispatching plain actions
     getSearchHistory: () => dispatch(getSearchHistory()),
+    signOut: () => dispatch(signOut()),
     searchCIN: (params) => dispatch(searchCIN(params)),
   };
 };

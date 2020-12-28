@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root 'application#home'
   
   namespace :v1, defaults: { format: 'json' } do
-    get 'cin', to: 'cin#index' 
+    get 'cin', to: 'cin#search'
     get 'cin/search_history', to: 'cin#search_history' 
   end
 
