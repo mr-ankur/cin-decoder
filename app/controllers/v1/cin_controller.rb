@@ -55,6 +55,8 @@ class V1::CinController < ApplicationController
     end
 
     def search
+        current_user.search_history.create(search_key: params[:number])
+        current_user.search_history.first.destroy if current_user.search_history.count > 300 # Deleting old search history
         valid = false
         if params[:number].length == 21
             listing = LISTING_STATUS[params[:number][0]]
@@ -70,8 +72,6 @@ class V1::CinController < ApplicationController
                                 reg_no = params[:number][15..20]
                                 if is_numeric?(reg_no)
                                     valid = true
-                                    current_user.search_history.create(search_key: params[:number])
-                                    current_user.search_history.first.destroy if current_user.search_history.count > 100 # Deleting old search history
                                 end
                             end
                         end

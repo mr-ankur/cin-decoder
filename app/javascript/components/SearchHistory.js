@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import moment from "moment";
 import Pagination from "react-js-pagination";
+import { createStructuredSelector } from "reselect";
+import { connect } from "react-redux";
 import { Container, Row, Col } from "react-grid-system";
+import { getSearchHistory } from "../actions/cinActions";
+import { Link } from "react-router-dom";
 
 const PER_PAGE_DATA = 5
 
-export default class SearchHistory extends Component {
+class SearchHistory extends Component {
   state = { activePage: 1 };
   componentWillMount() {
     this.props.getSearchHistory();
@@ -74,7 +78,27 @@ export default class SearchHistory extends Component {
             )}
           </Col>
         </Row>
+        <Row>
+          <Col xs={12}>
+            <Link to="/" style={{ fontSize: "2.5vmax" }}>
+              Home
+            </Link>
+          </Col>
+        </Row>
       </Container>
     );
   }
 }
+
+const structuredSelector = createStructuredSelector({
+  search_history: (state) => state.cinReducer.search_history,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    // dispatching plain actions
+    getSearchHistory: () => dispatch(getSearchHistory()),
+  };
+};
+
+export default connect(structuredSelector, mapDispatchToProps)(SearchHistory);

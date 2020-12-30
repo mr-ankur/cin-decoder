@@ -5,6 +5,7 @@ import {
   Switch,
 } from "react-router-dom";
 import CinDecoder from "../CinDecoder";
+import SearchHistory from "../SearchHistory";
 
 
 export default class Routes extends Component {
@@ -17,11 +18,11 @@ export default class Routes extends Component {
                 path="/"
                 render={() => <CinDecoder auth={this.props.auth} {...this.props} />}
               />
-              {/* <Route
+              <Route
                 exact
-                path="/users/sign_in"
-                render={() => <div> Helllllllllo</div>}
-              /> */}
+                path="/search_history"
+                render={() => <SearchHistory />}
+              />
             </Switch>
           </Router>
         );
