@@ -3,7 +3,7 @@ import moment from "moment";
 import Pagination from "react-js-pagination";
 import { Container, Row, Col } from "react-grid-system";
 
-const PER_PAGE_DATA = 8
+const PER_PAGE_DATA = 5
 
 export default class SearchHistory extends Component {
   state = { activePage: 1 };
@@ -18,8 +18,8 @@ export default class SearchHistory extends Component {
     const page_data =
       search_history &&
       search_history.slice(
-        this.state.activePage - 1,
-        this.state.activePage + PER_PAGE_DATA - 1
+        (this.state.activePage - 1) * PER_PAGE_DATA,
+        this.state.activePage * PER_PAGE_DATA
       );
     return (
       <Container>
@@ -58,20 +58,20 @@ export default class SearchHistory extends Component {
                   ))}
               </tbody>
             </table>
-            <Row>
-              <Col xs={12}>
-                <Pagination
-                  activePage={this.state.activePage}
-                  itemsCountPerPage={PER_PAGE_DATA}
-                  totalItemsCount={
-                    (search_history && search_history.length) || 100
-                  }
-                  pageRangeDisplayed={5}
-                  onChange={this.handlePageChange.bind(this)}
-                  style={{ display: "inline-flex", listStyleType: "none" }}
-                />
-              </Col>
-            </Row>
+            {search_history && search_history.length > PER_PAGE_DATA && (
+              <Row>
+                <Col xs={12}>
+                  <Pagination
+                    activePage={this.state.activePage}
+                    itemsCountPerPage={PER_PAGE_DATA}
+                    totalItemsCount={search_history && search_history.length}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange.bind(this)}
+                    style={{ display: "inline-flex", listStyleType: "none" }}
+                  />
+                </Col>
+              </Row>
+            )}
           </Col>
         </Row>
       </Container>
