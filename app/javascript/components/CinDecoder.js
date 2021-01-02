@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect'
 import { Field, reduxForm } from "redux-form";
 import { Container, Row, Col } from "react-grid-system"
 import { searchCIN } from "../actions/cinActions";
-import { signOut } from "../actions/loginActions";
+import { signOut } from "../actions/authActions";
 import { textField } from './formComponents'
 import { Link } from "react-router-dom";
 
@@ -33,6 +33,7 @@ class CinDecoder extends Component {
   render() {
     const { handleSubmit } = this.props;
     const valid = this.props.cin && this.props.cin.valid
+    const { auth } = this.props
     return (
       <Container>
         <Row style={{ marginTop: "10%" }}>
@@ -58,7 +59,7 @@ class CinDecoder extends Component {
                   />
                 </Col>
                 <Col xs={4}>
-                  <button className="search-button" type="submit">
+                  <button className="search-button" type="submit" style={{marginLeft: '-8px'}}>
                     Search
                   </button>
                 </Col>
@@ -66,7 +67,10 @@ class CinDecoder extends Component {
             </form>
           </Col>
           {!valid && this.props.cin && (
-            <Col xs={12} style={{ color: "grey", fontSize: "2.5vmax", marginTop: '2vmax' }}>
+            <Col
+              xs={12}
+              style={{ color: "grey", fontSize: "2.5vmax", marginTop: "2vmax" }}
+            >
               CIN Number is incorrect, please check it and try again.
             </Col>
           )}
@@ -106,14 +110,27 @@ class CinDecoder extends Component {
           )}
         </Row>
         <Row style={{ marginTop: "3.5vmax" }}>
-          <Col xs={9}>
-            <Link to="/search_history" style={{ fontSize: "2.5vmax" }}>
-              Search History
-            </Link>
-          </Col>
-          <Col xs={3}>
-            <button onClick={() => this.props.signOut()}>Sign Out</button>
-          </Col>
+          {auth &&
+            !auth.currentUser && (
+              <Col xs={9}>
+                <Link to="/login" style={{ fontSize: "2.5vmax" }}>
+                  Log In
+                </Link>
+              </Col>
+            )}
+          {auth &&
+            auth.currentUser && (
+              <div>
+                <Col xs={9}>
+                  <Link to="/search_history" style={{ fontSize: "2.5vmax" }}>
+                    Search History
+                  </Link>
+                </Col>
+                <Col xs={3}>
+                  <button onClick={() => this.props.signOut()}>Sign Out</button>
+                </Col>
+              </div>
+            )}
         </Row>
       </Container>
     );

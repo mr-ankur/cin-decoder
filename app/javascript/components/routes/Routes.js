@@ -3,9 +3,11 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
+  Redirect,
 } from "react-router-dom";
 import CinDecoder from "../CinDecoder";
 import SearchHistory from "../SearchHistory";
+import Login from "../auth/Login";
 
 
 export default class Routes extends Component {
@@ -16,12 +18,19 @@ export default class Routes extends Component {
               <Route
                 exact
                 path="/"
-                render={() => <CinDecoder auth={this.props.auth} {...this.props} />}
+                render={() => (
+                  <CinDecoder auth={this.props.auth} {...this.props} />
+                )}
               />
               <Route
                 exact
                 path="/search_history"
                 render={() => <SearchHistory />}
+              />
+              <Route
+                exact
+                path="/login"
+                render={() => <Login {...this.props} />}
               />
             </Switch>
           </Router>
