@@ -59,7 +59,11 @@ class CinDecoder extends Component {
                   />
                 </Col>
                 <Col xs={4}>
-                  <button className="search-button" type="submit" style={{marginLeft: '-8px'}}>
+                  <button
+                    className="search-button"
+                    type="submit"
+                    style={{ marginLeft: "-8px" }}
+                  >
                     Search
                   </button>
                 </Col>
@@ -110,27 +114,32 @@ class CinDecoder extends Component {
           )}
         </Row>
         <Row style={{ marginTop: "3.5vmax" }}>
-          {auth &&
-            !auth.currentUser && (
-              <Col xs={9}>
+          {auth && !auth.currentUser && (
+            <div>
+              <Col xs={6}>
                 <Link to="/login" style={{ fontSize: "2.5vmax" }}>
                   Log In
                 </Link>
               </Col>
-            )}
-          {auth &&
-            auth.currentUser && (
-              <div>
-                <Col xs={9}>
-                  <Link to="/search_history" style={{ fontSize: "2.5vmax" }}>
-                    Search History
-                  </Link>
-                </Col>
-                <Col xs={3}>
-                  <button onClick={() => this.props.signOut()}>Sign Out</button>
-                </Col>
-              </div>
-            )}
+              <Col xs={6}>
+                <Link to="/sign_up" style={{ fontSize: "2.5vmax" }}>
+                  Sign Up
+                </Link>
+              </Col>
+            </div>
+          )}
+          {auth && auth.currentUser && (
+            <div>
+              <Col xs={9}>
+                <Link to="/search_history" style={{ fontSize: "2.5vmax" }}>
+                  Search History
+                </Link>
+              </Col>
+              <Col xs={3}>
+                <button onClick={() => this.props.signOut()}>Sign Out</button>
+              </Col>
+            </div>
+          )}
         </Row>
       </Container>
     );

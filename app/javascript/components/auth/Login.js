@@ -6,6 +6,17 @@ import { Container, Row, Col } from "react-grid-system";
 import { signIn } from "../../actions/authActions";
 import { passwordField, emailField } from "../formComponents";
 
+const validate = (values) => {
+  const errors = { user: {} };
+  let { user = {} } = values;
+  if (user && !user.email) {
+    errors.user.email = "Email is required";
+  } else if (user && !user.password) {
+    errors.user.password = "Password is required";
+  }
+  return errors;
+};
+
 class Login extends Component {
     submit = (values) => {
         this.props.signIn(values)
@@ -74,7 +85,7 @@ const mapDispatchToProps = (dispatch) => {
 const LoginForm = reduxForm({
   // a unique name for the form
   form: "login",
-//   validate,
+  validate,
 })(Login);
 
 // export default LoginForm;

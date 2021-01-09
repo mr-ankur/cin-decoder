@@ -8,6 +8,7 @@ import {
 import CinDecoder from "../CinDecoder";
 import SearchHistory from "../SearchHistory";
 import Login from "../auth/Login";
+import SignUp from "../auth/SignUp";
 
 
 export default class Routes extends Component {
@@ -31,6 +32,11 @@ export default class Routes extends Component {
                 exact
                 path="/login"
                 render={() => <Login {...this.props} />}
+              />
+              <Route
+                exact
+                path="/sign_up"
+                render={() => <SignUp {...this.props} />}
               />
             </Switch>
           </Router>

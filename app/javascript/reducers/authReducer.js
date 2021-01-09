@@ -1,4 +1,6 @@
 import {
+  SIGNUP_SUCCESS,
+  SIGNUP_FAILED,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
   LOGOUT_SUCCESS,
@@ -46,6 +48,20 @@ export default function authReducer(state = initialState, action) {
           : Object.entries(action.data.errors)
               .map((m) => m.join(" "))[0]
               .replace("_", " "),
+      };
+    case SIGNUP_SUCCESS:
+      return {
+        loggingIn: false,
+        loggedIn: true,
+        currentUser: action.data,
+        message: "Signup successful",
+      };
+    case SIGNUP_FAILED:
+      return {
+        loggingIn: false,
+        loggedIn: false,
+        currentUser: null,
+        message: "Signup failed",
       };
     default:
       return state;

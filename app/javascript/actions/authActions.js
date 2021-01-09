@@ -1,6 +1,8 @@
 import axios from "axios";
 import ReactOnRails from "react-on-rails";
 import {
+  SIGNUP_SUCCESS,
+  SIGNUP_FAILED,
   LOGIN_FAILED,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
@@ -11,6 +13,20 @@ axios.defaults.headers.common[
   "X-CSRF-Token"
 ] = ReactOnRails.authenticityToken();
 axios.defaults.headers.post["Content-Type"] = "application/json";
+
+function signUpSuccess(data) {
+  return {
+    type: SIGNUP_SUCCESS,
+    data,
+  };
+}
+
+function signUpFailed(data) {
+  return {
+    type: SIGNUP_FAILED,
+    data,
+  };
+}
 
 function loginSuccess(data) {
   return {
@@ -83,6 +99,30 @@ export function signIn(params) {
         } else {
           if (error.response) dispatch(loginFailed(error.response.data));
           window.location.href = "/login";
+        }
+      });
+  };
+}
+
+export function signUp(params) {
+  return (dispatch) => {
+    return axios
+      .post("/users", params)
+      .then((response) => {
+        axios.defaults.headers.common["X-CSRF-Token"] =
+          response.headers["x-csrf-token"];
+        if (response.data) dispatch(signUpSuccess(response.data));
+      })
+      .catch((error) => {
+        if (
+          error.response &&
+          error.response.statusText === "Unprocessable Entity"
+        ) {
+          console.log("Unprocessable Entity");
+          window.location.href = "/sign_up";
+        } else {
+          if (error.response) dispatch(signUpFailed(error.response.data));
+          window.location.href = "/sign_up";
         }
       });
   };
