@@ -47,16 +47,48 @@ a {
 }
 
 .search-button {
-  float: left;
   width: 100%;
-  padding: 10px;
+  padding: 13px;
   background: #2196F3;
   color: white;
-  font-size: 3vmax;
+  font-size: 2vmax;
   border: 1px solid grey;
   border-left: none;
   cursor: pointer;
-  margin-top: 18px;
+  margin-top: 3vmax;
+  margin-left: -8px;
+}
+
+.text-field {
+  margin: 10px 0px;
+}
+
+.text-field > label{
+  font-size: 2vmax;
+}
+
+.text-field > div > input{
+  padding: 10px;
+  font-size: 2vmax;
+  border: 1px solid grey;
+  width: 100%;
+  background: #f1f1f1;
+}
+
+.text-field > div > span{
+  color: red;
+  font-size: 2vmax;
+}
+
+.full-button {
+  padding: 9px;
+  margin: 10px 0px;
+  width: 105%;
+  background: #0d81e0;
+  color: white;
+  font-size: 2vmax;
+  border: 1px solid grey;
+  cursor: pointer;
 }
 
 .table-style {

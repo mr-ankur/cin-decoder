@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import CinDecoder from "../CinDecoder";
 import SearchHistory from "../SearchHistory";
-import Login from "../auth/Login";
+import SignIn from "../auth/SignIn";
 import SignUp from "../auth/SignUp";
 
 
@@ -30,8 +30,8 @@ export default class Routes extends Component {
               />
               <Route
                 exact
-                path="/login"
-                render={() => <Login {...this.props} />}
+                path="/sign_in"
+                render={() => <SignIn {...this.props} />}
               />
               <Route
                 exact

@@ -1,5 +1,7 @@
 class V1::CinController < ApplicationController
 
+  skip_before_action :authenticate_user!, :only => [:search]
+
   LISTING_STATUS={'L'=>'Listed','U'=>'Unlisted'}
   STATE_CODE={
       'AP'=>'ANDHRA PRADESH',
@@ -55,8 +57,7 @@ class V1::CinController < ApplicationController
     end
 
     def search
-        current_user.search_history.create(search_key: params[:number])
-        current_user.search_history.first.destroy if current_user.search_history.count > 300 # Deleting old search history
+        create_search_history if current_user
         valid = false
         if params[:number].length == 21
             listing = LISTING_STATUS[params[:number][0]]
@@ -86,7 +87,15 @@ class V1::CinController < ApplicationController
         render json: { search_history: current_user.search_history.reverse }.to_json
     end
 
+    protected
+
     def is_numeric?(value)
         Float(value) != nil rescue false
     end
+
+    def create_search_history
+        current_user.search_history.create(search_key: params[:number])
+        current_user.search_history.first.destroy if current_user.search_history.count > 300 # Deleting old search history
+    end
+
 end

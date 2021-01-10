@@ -1,19 +1,10 @@
 import React from "react";
 
-export const textField = ({
-  input,
-  label,
-  meta: { touched, error, warning },
-}) => (
-  <div>
+export const textField = ({ input, label, meta: { touched, error, warning } }) => (
+  <div className="text-field">
     <label>{label}</label>
     <div>
-      <input
-        className="search-field"
-        {...input}
-        placeholder={label}
-        type="text"
-      />
+      <input {...input} placeholder={label} type="text" />
       {touched &&
         ((error && <span style={{ color: "red" }}>{error}</span>) ||
           (warning && <span>{warning}</span>))}
@@ -21,16 +12,11 @@ export const textField = ({
   </div>
 );
 
-export const emailField = ({
-  input,
-  label,
-  meta: { touched, error, warning },
-}) => (
-  <div>
+export const emailField = ({ input, label, meta: { touched, error, warning } }) => (
+  <div className="text-field">
     <label>{label}</label>
     <div>
       <input
-        className="search-field"
         {...input}
         placeholder={label}
         type="email"
@@ -42,22 +28,17 @@ export const emailField = ({
   </div>
 );
 
-export const passwordField = ({
-  input,
-  label,
-  meta: { touched, error, warning },
-}) => (
-  <div>
+export const passwordField = ({ input, label, meta: { touched, error, warning } }) => (
+  <div className="text-field">
     <label>{label}</label>
     <div>
       <input
-        className="search-field"
         {...input}
         placeholder={label}
         type="password"
       />
       {touched &&
-        ((error && <span style={{ color: "red" }}>{error}</span>) ||
+        ((error && <span>{error}</span>) ||
           (warning && <span>{warning}</span>))}
     </div>
   </div>

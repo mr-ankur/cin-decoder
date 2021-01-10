@@ -5,6 +5,7 @@ import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
 import { Container, Row, Col } from "react-grid-system";
 import { getSearchHistory } from "../actions/cinActions";
+import { signOut } from "../actions/authActions";
 import { Link } from "react-router-dom";
 
 const PER_PAGE_DATA = 5
@@ -62,6 +63,11 @@ class SearchHistory extends Component {
                   ))}
               </tbody>
             </table>
+            {search_history && search_history.length == 0 && (
+              <Row>
+                <Col xs={12}><span style={{ margin: '2vmax'}}> No search history yet.</span></Col>
+              </Row>
+            )}
             {search_history && search_history.length > PER_PAGE_DATA && (
               <Row>
                 <Col xs={12}>
@@ -78,10 +84,19 @@ class SearchHistory extends Component {
             )}
           </Col>
         </Row>
-        <Row>
-          <Col xs={12}>
-            <Link to="/" style={{ fontSize: "2.5vmax" }}>
+        <Row style={{ marginTop: "10px" }}>
+          <Col xs={6}>
+            <Link to="/" style={{ fontSize: "2vmax" }}>
               Home
+            </Link>
+          </Col>
+          <Col xs={6}>
+            <Link
+              onClick={() => this.props.signOut()}
+              to=""
+              style={{ fontSize: "2vmax" }}
+            >
+              Sign Out
             </Link>
           </Col>
         </Row>
@@ -97,6 +112,7 @@ const structuredSelector = createStructuredSelector({
 const mapDispatchToProps = (dispatch) => {
   return {
     // dispatching plain actions
+    signOut: () => dispatch(signOut()),
     getSearchHistory: () => dispatch(getSearchHistory()),
   };
 };

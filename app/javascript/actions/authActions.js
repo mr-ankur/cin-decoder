@@ -95,10 +95,10 @@ export function signIn(params) {
           error.response.statusText === "Unprocessable Entity"
         ) {
           console.log("Unprocessable Entity");
-          window.location.href = "/login";
+          window.location.href = "/sign_in";
         } else {
           if (error.response) dispatch(loginFailed(error.response.data));
-          window.location.href = "/login";
+          window.location.href = "/sign_in";
         }
       });
   };

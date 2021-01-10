@@ -36,7 +36,12 @@ class CinDecoder extends Component {
     const { auth } = this.props
     return (
       <Container>
-        <Row style={{ marginTop: "10%" }}>
+        <Row>
+          {auth && auth.currentUser && (
+            <div style={{ color: "blue", fontSize: "2vmax" }}>
+              Hello {auth.currentUser.full_name}
+            </div>
+          )}
           <Col xs={12}>
             <h1
               style={{
@@ -59,13 +64,11 @@ class CinDecoder extends Component {
                   />
                 </Col>
                 <Col xs={4}>
-                  <button
-                    className="search-button"
-                    type="submit"
-                    style={{ marginLeft: "-8px" }}
-                  >
-                    Search
-                  </button>
+                  <div>
+                    <button className="search-button" type="submit">
+                      Search
+                    </button>
+                  </div>
                 </Col>
               </Row>
             </form>
@@ -80,7 +83,6 @@ class CinDecoder extends Component {
           )}
           {valid && (
             <Col xs={12}>
-              <br />
               <br />
               <table className="table-style">
                 <tbody>
@@ -113,34 +115,38 @@ class CinDecoder extends Component {
             </Col>
           )}
         </Row>
-        <Row style={{ marginTop: "3.5vmax" }}>
-          {auth && !auth.currentUser && (
-            <div>
-              <Col xs={6}>
-                <Link to="/login" style={{ fontSize: "2.5vmax" }}>
-                  Log In
-                </Link>
-              </Col>
-              <Col xs={6}>
-                <Link to="/sign_up" style={{ fontSize: "2.5vmax" }}>
-                  Sign Up
-                </Link>
-              </Col>
-            </div>
-          )}
-          {auth && auth.currentUser && (
-            <div>
-              <Col xs={9}>
-                <Link to="/search_history" style={{ fontSize: "2.5vmax" }}>
-                  Search History
-                </Link>
-              </Col>
-              <Col xs={3}>
-                <button onClick={() => this.props.signOut()}>Sign Out</button>
-              </Col>
-            </div>
-          )}
-        </Row>
+        {auth && !auth.currentUser && (
+          <Row style={{ marginTop: "10px" }}>
+            <Col xs={4}>
+              <Link to="/sign_in" style={{ fontSize: "2vmax" }}>
+                Sign In
+              </Link>
+            </Col>
+            <Col xs={4}>
+              <Link to="/sign_up" style={{ fontSize: "2vmax" }}>
+                Sign Up
+              </Link>
+            </Col>
+          </Row>
+        )}
+        {auth && auth.currentUser && (
+          <Row style={{ marginTop: "10px" }}>
+            <Col xs={4}>
+              <Link to="/search_history" style={{ fontSize: "2vmax" }}>
+                Search History
+              </Link>
+            </Col>
+            <Col xs={3}>
+              <Link
+                onClick={() => this.props.signOut()}
+                to=""
+                style={{ fontSize: "2vmax" }}
+              >
+                Sign Out
+              </Link>
+            </Col>
+          </Row>
+        )}
       </Container>
     );
   }
