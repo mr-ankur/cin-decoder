@@ -30,6 +30,13 @@ export default class Routes extends Component {
               />
               <Route
                 exact
+                path="/search_history/:key"
+                render={() => (
+                  <CinDecoder auth={this.props.auth} {...this.props} />
+                )}
+              />
+              <Route
+                exact
                 path="/sign_in"
                 render={() => <SignIn {...this.props} />}
               />

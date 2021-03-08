@@ -22,6 +22,14 @@ const validate = (values) => {
 class CinDecoder extends Component {
   state = {
     lastSearch: null,
+    searchKey: null,
+  }
+  componentWillMount(){
+   let key = window.location.pathname.split("/").pop(1);
+   if (key && key !== '' && key.length == 21) {
+      this.setState({ searchKey: key });
+      this.props.searchCIN(key);
+    }
   }
   submit = (values) => {
     let number = values.cin && values.cin.number;
@@ -58,6 +66,8 @@ class CinDecoder extends Component {
               <Row>
                 <Col xs={8}>
                   <Field
+                    autoFocus
+                    defaultValue={this.state.searchKey}
                     name="cin.number"
                     component={textField}
                     label="CIN Number"

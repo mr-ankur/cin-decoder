@@ -55,7 +55,13 @@ class SearchHistory extends Component {
                 {page_data &&
                   page_data.map((x) => (
                     <tr key={x.id}>
-                      <td style={{ textAlign: "center" }}>{x.search_key}</td>
+                      <td
+                        style={{ textAlign: "center" }}
+                      >
+                        <Link to={"/search_history/"+x.search_key} style={{ fontSize: "2vmax" }}>
+                          {x.search_key}
+                        </Link>
+                      </td>
                       <td style={{ textAlign: "center" }}>
                         {moment(x.created_at).format("h:mm:ss A, D MMM YYYY")}
                       </td>
@@ -65,7 +71,12 @@ class SearchHistory extends Component {
             </table>
             {search_history && search_history.length == 0 && (
               <Row>
-                <Col xs={12}><span style={{ margin: '2vmax'}}> No search history yet.</span></Col>
+                <Col xs={12}>
+                  <span style={{ margin: "2vmax" }}>
+                    {" "}
+                    No search history yet.
+                  </span>
+                </Col>
               </Row>
             )}
             {search_history && search_history.length > PER_PAGE_DATA && (

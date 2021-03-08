@@ -1,10 +1,15 @@
 import React from "react";
 
-export const textField = ({ input, label, meta: { touched, error, warning } }) => (
+export const textField = ({
+  input,
+  label,
+  defaultValue,
+  meta: { touched, error, warning },
+}) => (
   <div className="text-field">
     <label>{label}</label>
     <div>
-      <input {...input} placeholder={label} type="text" />
+      <input {...input} placeholder={label} value={defaultValue} type="text" />
       {touched &&
         ((error && <span style={{ color: "red" }}>{error}</span>) ||
           (warning && <span>{warning}</span>))}

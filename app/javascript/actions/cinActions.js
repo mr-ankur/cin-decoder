@@ -26,7 +26,7 @@ function getSearchHistorySuccess(data) {
 export function getSearchHistory() {
   return (dispatch) => {
     return axios
-      .get("v1/cin/search_history")
+      .get("/v1/cin/search_history")
       .then((response) => response.data)
       .then((data) => dispatch(getSearchHistorySuccess(data)))
       .catch((error) => console.log(error));
@@ -36,7 +36,7 @@ export function getSearchHistory() {
 export function searchCIN(number) {
   return (dispatch) => {
     return axios
-      .get("v1/cin?number=" + number)
+      .get("/v1/cin?number=" + number)
       .then((response) => response.data)
       .then((data) => dispatch(searchCINSuccess(data)))
       .catch((error) => console.log(error));
